@@ -2,28 +2,28 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.1": {
-      "ClassLibrary1/1.0.0": {
+      "BuilderClasses/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "compile": {
-          "bin/placeholder/ClassLibrary1.dll": {}
+          "bin/placeholder/BuilderClasses.dll": {}
         },
         "runtime": {
-          "bin/placeholder/ClassLibrary1.dll": {}
+          "bin/placeholder/BuilderClasses.dll": {}
         }
       }
     }
   },
   "libraries": {
-    "ClassLibrary1/1.0.0": {
+    "BuilderClasses/1.0.0": {
       "type": "project",
-      "path": "../ClassLibrary1/ClassLibrary1.csproj",
-      "msbuildProject": "../ClassLibrary1/ClassLibrary1.csproj"
+      "path": "../ClassLibrary1/BuilderClasses.csproj",
+      "msbuildProject": "../ClassLibrary1/BuilderClasses.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
-      "ClassLibrary1 >= 1.0.0"
+      "BuilderClasses >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -52,8 +52,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\jaros\\Desktop\\labwzorce1\\ClassLibrary1\\ClassLibrary1.csproj": {
-              "projectPath": "C:\\Users\\jaros\\Desktop\\labwzorce1\\ClassLibrary1\\ClassLibrary1.csproj"
+            "C:\\Users\\jaros\\Desktop\\labwzorce1\\ClassLibrary1\\BuilderClasses.csproj": {
+              "projectPath": "C:\\Users\\jaros\\Desktop\\labwzorce1\\ClassLibrary1\\BuilderClasses.csproj"
             }
           }
         }
