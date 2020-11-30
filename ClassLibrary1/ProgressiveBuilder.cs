@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ClassLibrary1
 {
-    class ProgressiveBuilder : GlassesBuilder
+    public class ProgressiveBuilder : GlassesBuilder
     {
         public ProgressiveBuilder()
         {
@@ -14,6 +14,7 @@ namespace ClassLibrary1
         {
             Glasses.Lenses = "Progressive";
             Glasses.LensesPrice = 150;
+            Glasses.Price += 150;
         }
     }
 }

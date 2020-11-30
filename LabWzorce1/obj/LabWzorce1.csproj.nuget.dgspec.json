@@ -4,12 +4,12 @@
     "C:\\Users\\jaros\\Desktop\\labwzorce1\\LabWzorce1\\LabWzorce1.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jaros\\Desktop\\labwzorce1\\ClassLibrary1\\BuilderClasses.csproj": {
+    "C:\\Users\\jaros\\Desktop\\labwzorce1\\ClassLibrary1\\ClassLibrary1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jaros\\Desktop\\labwzorce1\\ClassLibrary1\\BuilderClasses.csproj",
-        "projectName": "BuilderClasses",
-        "projectPath": "C:\\Users\\jaros\\Desktop\\labwzorce1\\ClassLibrary1\\BuilderClasses.csproj",
+        "projectUniqueName": "C:\\Users\\jaros\\Desktop\\labwzorce1\\ClassLibrary1\\ClassLibrary1.csproj",
+        "projectName": "ClassLibrary1",
+        "projectPath": "C:\\Users\\jaros\\Desktop\\labwzorce1\\ClassLibrary1\\ClassLibrary1.csproj",
         "packagesPath": "C:\\Users\\jaros\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\jaros\\Desktop\\labwzorce1\\ClassLibrary1\\obj\\",
         "projectStyle": "PackageReference",
@@ -79,8 +79,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Users\\jaros\\Desktop\\labwzorce1\\ClassLibrary1\\BuilderClasses.csproj": {
-                "projectPath": "C:\\Users\\jaros\\Desktop\\labwzorce1\\ClassLibrary1\\BuilderClasses.csproj"
+              "C:\\Users\\jaros\\Desktop\\labwzorce1\\ClassLibrary1\\ClassLibrary1.csproj": {
+                "projectPath": "C:\\Users\\jaros\\Desktop\\labwzorce1\\ClassLibrary1\\ClassLibrary1.csproj"
               }
             }
           }

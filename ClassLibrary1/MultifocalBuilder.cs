@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ClassLibrary1
 {
-    class MultifocalBuilder : GlassesBuilder
+    public class MultifocalBuilder : GlassesBuilder
     {
         public MultifocalBuilder()
         {
@@ -14,6 +14,7 @@ namespace ClassLibrary1
         {
             Glasses.Lenses = "Multifocal";
             Glasses.LensesPrice = 200;
+            Glasses.Price += 200;
         }
     }
 }
