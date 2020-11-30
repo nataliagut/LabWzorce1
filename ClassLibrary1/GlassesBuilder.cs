@@ -10,6 +10,6 @@ namespace ClassLibrary1
         //public abstract void getGlassesType();
         //public abstract void getRims();
         public abstract void BuildLenses();
-        
+
     }
 }

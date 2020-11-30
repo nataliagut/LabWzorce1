@@ -5,8 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LabWzorce1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
+        Title="MainWindow" Height="822" Width="1234">
+    <Grid x:Name="mainGrid" Background="#FF4CA4AD">
+        <Label Content="Vision Express" HorizontalAlignment="Center" Margin="0,51,0,0" VerticalAlignment="Top" FontSize="80" FontWeight="Bold" FontStyle="Italic" FontFamily="Bahnschrift SemiBold Condensed"/>
+        <Button Content="Glasses" HorizontalAlignment="Left" Margin="114,234,0,0" VerticalAlignment="Top" Height="108" Width="255" FontSize="60" Click="Button_Click"/>
+        <Button Content="Save Order" HorizontalAlignment="Left" Margin="57,581,0,0" VerticalAlignment="Top" Height="108" Width="369" FontSize="60" Click="Button_Click_1"/>
+        <ComboBox x:Name="ComboBox1" HorizontalAlignment="Left" Margin="529,288,0,0" VerticalAlignment="Top" Width="120"/>
+        <ListBox x:Name="OptionList" Margin="759,326,195,117" ItemsSource="{Binding TheList}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <CheckBox Name="CheckBoxZone" Content="{Binding TheText}"  Checked="CheckBoxZone_Checked"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Label Content="2. Choose type:" HorizontalAlignment="Left" Margin="512,246,0,0" VerticalAlignment="Top" Background="{x:Null}" FontSize="20" FontWeight="Bold"/>
+        <Label Content="1. Choose product:" HorizontalAlignment="Left" Margin="104,179,0,0" VerticalAlignment="Top" FontSize="30" FontWeight="Bold"/>
     </Grid>
 </Window>
