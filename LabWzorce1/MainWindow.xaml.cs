@@ -33,12 +33,16 @@ namespace LabWzorce1
         {
             InitializeComponent();
             orderList = new List<GlassesBuilder>();
-            //visionexpress = new VisionExpress();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            TypeComboBox.Visibility = Visibility.Visible;
+            labelChooseType.Visibility = Visibility.Visible;
             CreateGlasses();
+            GlassesProductBtn.IsEnabled = false;
+
+            //create visibility func
         }
         private void CreateGlasses()
         {
@@ -47,61 +51,135 @@ namespace LabWzorce1
             var anti = new ComboBoxItem();
             anti.Content = "Antireflective";
             var prog = new ComboBoxItem();
+            //prog.PreviewMouseLeftButtonDown
             prog.Content = "Progressive";
 
-            ComboBox1.Items.Add(multi);
-            ComboBox1.Items.Add(anti);
-            ComboBox1.Items.Add(prog);
+            TypeComboBox.Items.Add(multi);
+            TypeComboBox.Items.Add(anti);
+            TypeComboBox.Items.Add(prog);
 
             var continueButton = new Button();
-            continueButton.Content = "Get additions";
+            continueButton.Content = "OK";
             continueButton.HorizontalAlignment = HorizontalAlignment.Left;
-            continueButton.Margin = new Thickness(759, 265, 0, 0);
+            continueButton.Margin = new Thickness(672, 236, 0, 0);
             continueButton.VerticalAlignment = VerticalAlignment.Top;
-            continueButton.Height = 46;
-            continueButton.Width = 139;
-            continueButton.Name = "NextButton";
-            continueButton.Click += new RoutedEventHandler(NextButtonClick);
+            continueButton.Height = 22;
+            continueButton.Width = 44;
+            continueButton.Name = "OkButtonClick";
+            continueButton.Click += new RoutedEventHandler(OkButtonClick);
             mainGrid.Children.Add(continueButton);
         }
-        void NextButtonClick(object sender, RoutedEventArgs e)
+        void ShowHiddenGlassesElements()
         {
-
-            var selectedType = ComboBox1.Text;
-            VisionExpress visionExpress = new VisionExpress();
-            switch (selectedType)
+            RimsComboBox.Visibility = Visibility.Visible;
+            labelChooseRims.Visibility = Visibility.Visible;
+            textBoxLeft.Visibility = Visibility.Visible;
+            textBoxRight.Visibility = Visibility.Visible;
+            labelSetDefect.Visibility = Visibility.Visible;
+            labelRight.Visibility = Visibility.Visible; 
+            labelLeft.Visibility = Visibility.Visible;
+            BtnSaveDefect.Visibility = Visibility.Visible;
+            OptionList.Visibility = Visibility.Visible; 
+        }
+        void OkButtonClick(object sender, RoutedEventArgs e)
+        {
+            var selectedType = TypeComboBox.Text;
+            if (!string.IsNullOrEmpty(selectedType))
             {
-                case "Multifocal":
-                    GlassesBuilder builderMulti = new MultifocalBuilder();
-                    visionExpress.ConstructGlasses(builderMulti);
-                    glasses = builderMulti.Glasses;
-                    break;
-                case "Progressive":
-                    GlassesBuilder builderProg = new ProgressiveBuilder();
-                    visionExpress.ConstructGlasses(builderProg);
-                    glasses = builderProg.Glasses;
-                    break;
-                case "Antireflective":
-                    GlassesBuilder builderAnti = new AntireflectiveBuilder();
-                    visionExpress.ConstructGlasses(builderAnti);
-                    glasses = builderAnti.Glasses;
-                    break;
+                TypeComboBox.IsEnabled = false;
+                ShowHiddenGlassesElements();
+                VisionExpress visionExpress = new VisionExpress();
+                switch (selectedType)
+                {
+                    case "Multifocal":
+                        GlassesBuilder builderMulti = new MultifocalBuilder();
+                        visionExpress.ConstructGlasses(builderMulti);
+                        glasses = builderMulti.Glasses;
+                        break;
+                    case "Progressive":
+                        GlassesBuilder builderProg = new ProgressiveBuilder();
+                        visionExpress.ConstructGlasses(builderProg);
+                        glasses = builderProg.Glasses;
+                        break;
+                    case "Antireflective":
+                        GlassesBuilder builderAnti = new AntireflectiveBuilder();
+                        visionExpress.ConstructGlasses(builderAnti);
+                        glasses = builderAnti.Glasses;
+                        break;
 
+                }
+                glassAdditions = new GlassProduct();
+                FillOptionList();
+                FillRimsOptions();
             }
-            glassAdditions = new GlassProduct();
-            FillOptionList();
 
+        }
+        void FillRimsOptions()
+        {
+            RimsComboBox.Items.Insert(0, "Standard");
+            RimsComboBox.SelectedIndex = 0;
+            var gucciRims = new ComboBoxItem();
+            gucciRims.Content = "Gucci rims";
+            var armaniRims = new ComboBoxItem();
+            armaniRims.Content = "Armani rims";
+            var diorRims = new ComboBoxItem();
+            diorRims.Content = "Dior rims";
+
+            RimsComboBox.Items.Add(gucciRims);
+            RimsComboBox.Items.Add(armaniRims);
+            RimsComboBox.Items.Add(diorRims);
+
+            //var saveRimsBtn = new Button();
+            //saveRimsBtn.Content = "OK";
+            //saveRimsBtn.HorizontalAlignment = HorizontalAlignment.Left;
+            //saveRimsBtn.Margin = new Thickness(562, 495, 0, 0);
+            //saveRimsBtn.VerticalAlignment = VerticalAlignment.Top;
+            //saveRimsBtn.Height = 22;
+            //saveRimsBtn.Width = 59;
+            //saveRimsBtn.Name = "Saverims";
+            SaveRims.Visibility = Visibility.Visible;
+            SaveRims.Click += new RoutedEventHandler(SaveRimsBtnClick);
+            //mainGrid.Children.Add(saveRimsBtn);
+        }
+        void SaveRimsBtnClick(object sender, RoutedEventArgs e)
+        {
+            SaveRims.IsEnabled = false;
+            //zdezaktywowac ten button ktory wywolal funkcje
+            var selectedRims = RimsComboBox.Text;
+            if (!string.IsNullOrEmpty(selectedRims))
+            {
+                RimsComboBox.IsEnabled = false;
+                switch (selectedRims)
+                {
+                    case "Gucci rims":
+                        var gucciRims = new Rims(RimTypesEnum.Gucci);
+                        glasses.Rims = gucciRims.Name;
+                        glasses.RimsPrice = gucciRims.Price;
+                        glasses.Price += gucciRims.Price;
+                        break;
+                    case "Armani rims":
+                        var armaniRims = new Rims(RimTypesEnum.Armani);
+                        glasses.Rims = armaniRims.Name;
+                        glasses.RimsPrice = armaniRims.Price;
+                        glasses.Price += armaniRims.Price;
+                        break;
+                    case "Dior rims":
+                        var diorRims = new Rims(RimTypesEnum.Dior);
+                        glasses.Rims = diorRims.Name;
+                        glasses.RimsPrice = diorRims.Price;
+                        glasses.Price += diorRims.Price;
+                        break;
+                }
+                if(selectedRims != "Standard")
+                    glasses.Price -= 100;
+            }
         }
         void FillOptionList()
         {
-            //var checkGucciRims = new CheckBox();
-            //checkGucciRims.Content = "Gucci rims";
-            //OptionList.Items.Add(checkGucciRims);
             TheList = new ObservableCollection<BoolStringClass>();
-            TheList.Add(new BoolStringClass { TheText = "Gucci rims"});
-            TheList.Add(new BoolStringClass { TheText = "Armani rims"});
             TheList.Add(new BoolStringClass { TheText = "UV filter"});
             TheList.Add(new BoolStringClass { TheText = "Polarized"});
+            TheList.Add(new BoolStringClass { TheText = "For computer filter"});
             this.DataContext = this;
         }
         void CheckBoxZone_Checked(object sender, RoutedEventArgs e)
@@ -110,24 +188,47 @@ namespace LabWzorce1
             string checkedContent = chkZone.Content.ToString();
             switch (checkedContent)
             {
-                case "Gucci rims":
-                    var gucciRims = new Rims(RimTypesEnum.Gucci);
-                    glasses.Rims = gucciRims.Name;
-                    glasses.RimsPrice = gucciRims.Price;
-                    glasses.Price += gucciRims.Price;
-                    glasses.Price -= 100;
-                    break;
+                //case "Gucci rims":
+                //    var gucciRims = new Rims(RimTypesEnum.Gucci);
+                //    glasses.Rims = gucciRims.Name;
+                //    glasses.RimsPrice = gucciRims.Price;
+                //    glasses.Price += gucciRims.Price;
+                //    break;
+                //case "Armani rims":
+                //    var armaniRims = new Rims(RimTypesEnum.Armani);
+                //    glasses.Rims = armaniRims.Name;
+                //    glasses.RimsPrice = armaniRims.Price;
+                //    glasses.Price += armaniRims.Price;
+                //    break;
+                //case "Dior rims":
+                //    var diorRims = new Rims(RimTypesEnum.Dior);
+                //    glasses.Rims = diorRims.Name;
+                //    glasses.RimsPrice = diorRims.Price;
+                //    glasses.Price += diorRims.Price;
+                //    break;
                 case "UV filter":
                     var uvFilter = new Filters(FiltersEnum.UV);
-                    glasses.Price += uvFilter.Price;
+                    glassAdditions.AddElement(uvFilter);
+                    break;
+                case "Polarized":
+                    var polarFilter = new Filters(FiltersEnum.Polarized);
+                    glassAdditions.AddElement(polarFilter);
+                    break;
+                case "For computer filter":
+                    var compFilter = new Filters(FiltersEnum.ForComputer);
+                    glassAdditions.AddElement(compFilter);
                     break;
             }
         }
         private void Button_Click_1(object sender, RoutedEventArgs e)
+            //save order btn
         {
+            glassAdditions.AddToGlasses(glasses);
+            MessageBox.Show(glasses.AdditionList.Count + "");
             foreach (IComposite el in glasses.AdditionList)
             {
-                MessageBox.Show(el.Name + "added el");
+                MessageBox.Show(el.Name + " " + el.Price);
+                glasses.Price += el.Price;
             }
             //glasses.Price += glasses.RimsPrice;
             //glasses.Price += glasses.LensesPrice;
@@ -145,6 +246,42 @@ namespace LabWzorce1
             //    ZoneValue.Text = "Selected Zone Value= " + chkZone.Tag.ToString();
             //}
 
+        }
+
+        private void BtnSaveDefect_Click(object sender, RoutedEventArgs e)
+        {
+            double defectL, defectR;
+            bool isDoubleLeft = Double.TryParse(textBoxLeft.Text, out defectL);
+            bool isDoubleRight = Double.TryParse(textBoxRight.Text, out defectR);
+            bool flag1 = false;
+            bool flag2 = false;
+            if (isDoubleLeft && defectL <= 30 && defectL >= -30)
+            {
+                textBoxLeft.IsEnabled = false;
+                flag1 = true;
+            }
+            else
+            {
+                MessageBox.Show("Wrong value of left defect, type value between -30 and 30");
+                textBoxLeft.Text = "";
+            }
+            if (isDoubleRight && defectR <= 30 && defectR >= -30)
+            {
+                textBoxRight.IsEnabled = false;
+                flag2 = true;
+            }
+            else
+            {
+                MessageBox.Show("Wrong value of right defect, type value between -30 and 30");
+                textBoxRight.Text = "";
+            }
+            if (flag1 && flag2)
+            {
+                BtnSaveDefect.IsEnabled = false;
+                var defect = new DefectValue(defectL, defectR);
+                MessageBox.Show(defect.Name +" " +defect.Price);
+                glassAdditions.AddElement(defect);
+            }
         }
 
     }
