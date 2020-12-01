@@ -18,6 +18,11 @@ namespace ClassLibrary1
         {
             AddedProducts.Add(element);
         }
+        public void RemoveElement(IComposite element)
+        {
+            string name = element.Name;
+            AddedProducts.RemoveAll(el => el.Name == name);
+        }
         public void ShowList()
         {
             foreach (IComposite el in AddedProducts)
