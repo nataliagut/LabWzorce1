@@ -1,18 +1,37 @@
+Orders:
+-------------
+type:Antireflective
+lenses type:Antireflective
+lenses price:100
+Rims:Dior rims
+Rims price:600
+Left defect: 5, Right defect: 5 400
+Total price: 1100
+-------------
+type:Antireflective
+lenses type:Antireflective
+lenses price:100
+Rims:standard
+Rims price:100
+Polarized filter 200
+ForComputer filter 300
+UV filter 400
+Total price: 1100
+-------------
 type:Multifocal
 lenses type:Multifocal
 lenses price:200
+Rims:Armani rims
+Rims price:500
+UV filter, price:400
+Left defect: 5, Right defect: 5, price:400
+Total price: 1500
+-------------
+type:Antireflective
+lenses type:Antireflective
+lenses price:100
 Rims:Gucci rims
 Rims price:550
-UV filter 400
-Left defect: 4, Right defect: 4 400
-Total price: 1550
--------------
-type:Progressive
-lenses type:Progressive
-lenses price:150
-Rims:Dior rims
-Rims price:600
-ForComputer filter 300
-Left defect: 1, Right defect: 1 200
-Total price: 1750
+Left defect: 5, Right defect: 3, price:300
+Total price: 1400
 -------------

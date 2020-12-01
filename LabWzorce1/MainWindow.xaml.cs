@@ -296,7 +296,7 @@ namespace LabWzorce1
                 sw.WriteLine("Rims price:" + glasses.RimsPrice);
                 foreach (IComposite el in glasses.AdditionList)
                 {
-                    sw.WriteLine(el.Name + " " + el.Price);
+                    sw.WriteLine(el.Name + ", price:" + el.Price);
                 }
                 sw.WriteLine($"Total price: {glasses.Price}"); 
                 sw.WriteLine("-------------");
@@ -310,9 +310,9 @@ namespace LabWzorce1
             var glassesType = new TextBlock();
             glassesType.Text = $"Glasses type: {glasses._type}";
             var lensesType = new TextBlock();
-            lensesType.Text = $"Lenses type: {glasses.Lenses}, {glasses.LensesPrice}";
+            lensesType.Text = $"Lenses type: {glasses.Lenses}, price: {glasses.LensesPrice}";
             var rimsType = new TextBlock();
-            rimsType.Text = $"Rims type: {glasses.Rims}, {glasses.RimsPrice}";
+            rimsType.Text = $"Rims type: {glasses.Rims}, price: {glasses.RimsPrice}";
 
             CurrentOrderList.Items.Add(glassesType);
             CurrentOrderList.Items.Add(lensesType);
@@ -321,7 +321,7 @@ namespace LabWzorce1
             foreach (IComposite el in glassAdditions.AddedProducts)
             {
                 var temp = new TextBlock();
-                temp.Text = $"{el.Name}, {el.Price}";
+                temp.Text = $"{el.Name}, price: {el.Price}";
                 tempPrice += el.Price;
                 CurrentOrderList.Items.Add(temp);
             }
