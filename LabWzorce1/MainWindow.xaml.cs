@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,7 +28,6 @@ namespace LabWzorce1
         public ObservableCollection<BoolStringClass> TheList { get; set; }
         public List<GlassesBuilder> orderList;
         public GlassProduct glassAdditions;
-        //public VisionExpress visionexpress;
         public Glasses glasses;
         public MainWindow()
         {
@@ -41,8 +41,6 @@ namespace LabWzorce1
             labelChooseType.Visibility = Visibility.Visible;
             CreateGlasses();
             GlassesProductBtn.IsEnabled = false;
-
-            //create visibility func
         }
         private void CreateGlasses()
         {
@@ -58,16 +56,7 @@ namespace LabWzorce1
             TypeComboBox.Items.Add(anti);
             TypeComboBox.Items.Add(prog);
 
-            var continueButton = new Button();
-            continueButton.Content = "OK";
-            continueButton.HorizontalAlignment = HorizontalAlignment.Left;
-            continueButton.Margin = new Thickness(672, 236, 0, 0);
-            continueButton.VerticalAlignment = VerticalAlignment.Top;
-            continueButton.Height = 22;
-            continueButton.Width = 44;
-            continueButton.Name = "OkButtonClick";
-            continueButton.Click += new RoutedEventHandler(OkButtonClick);
-            mainGrid.Children.Add(continueButton);
+            OkButton.Visibility = Visibility.Visible;
         }
         void ShowHiddenGlassesElements()
         {
@@ -79,13 +68,58 @@ namespace LabWzorce1
             labelRight.Visibility = Visibility.Visible; 
             labelLeft.Visibility = Visibility.Visible;
             BtnSaveDefect.Visibility = Visibility.Visible;
-            OptionList.Visibility = Visibility.Visible; 
+            OptionList.Visibility = Visibility.Visible;
+            CurrentOrderLabel.Visibility = Visibility.Visible;
+            CurrentOrderList.Visibility = Visibility.Visible;
+            saveOrderBtn.Visibility = Visibility.Visible;
+            ClearOrderBtn.Visibility = Visibility.Visible;
+        }
+        void HideCurrentOrderElements()
+        {
+            labelChooseType.Visibility = Visibility.Hidden;
+            TypeComboBox.Visibility = Visibility.Hidden;
+            SaveRims.Visibility = Visibility.Hidden;
+            OkButton.Visibility = Visibility.Hidden;
+            RimsComboBox.Visibility = Visibility.Hidden;
+            labelChooseRims.Visibility = Visibility.Hidden;
+            textBoxLeft.Visibility = Visibility.Hidden;
+            textBoxRight.Visibility = Visibility.Hidden;
+            labelSetDefect.Visibility = Visibility.Hidden;
+            labelRight.Visibility = Visibility.Hidden;
+            labelLeft.Visibility = Visibility.Hidden;
+            BtnSaveDefect.Visibility = Visibility.Hidden;
+            OptionList.Visibility = Visibility.Hidden;
+            CurrentOrderLabel.Visibility = Visibility.Hidden;
+            CurrentOrderList.Visibility = Visibility.Hidden;
+            saveOrderBtn.Visibility = Visibility.Hidden;
+            ClearOrderBtn.Visibility = Visibility.Hidden;
+        }
+        void ClearCurrentComboBoxValues()
+        {
+            TypeComboBox.Items.Clear();
+            RimsComboBox.Items.Clear();
+        }
+        void BtnsReenable()
+        {
+            GlassesProductBtn.IsEnabled = true;
+            OkButton.IsEnabled = true;
+            TypeComboBox.IsEnabled = true;
+            SaveRims.IsEnabled = true;
+            RimsComboBox.IsEnabled = true;
+            BtnSaveDefect.IsEnabled = true;
+            textBoxRight.IsEnabled = true;
+            textBoxRight.Text = "";
+            textBoxLeft.IsEnabled = true;
+            textBoxLeft.Text = "";
+
         }
         void OkButtonClick(object sender, RoutedEventArgs e)
         {
+            FillOptionList();
             var selectedType = TypeComboBox.Text;
             if (!string.IsNullOrEmpty(selectedType))
             {
+                OkButton.IsEnabled = false;
                 TypeComboBox.IsEnabled = false;
                 ShowHiddenGlassesElements();
                 VisionExpress visionExpress = new VisionExpress();
@@ -109,8 +143,8 @@ namespace LabWzorce1
 
                 }
                 glassAdditions = new GlassProduct();
-                FillOptionList();
                 FillRimsOptions();
+                RefreshCurrentOrderList();
             }
 
         }
@@ -129,22 +163,12 @@ namespace LabWzorce1
             RimsComboBox.Items.Add(armaniRims);
             RimsComboBox.Items.Add(diorRims);
 
-            //var saveRimsBtn = new Button();
-            //saveRimsBtn.Content = "OK";
-            //saveRimsBtn.HorizontalAlignment = HorizontalAlignment.Left;
-            //saveRimsBtn.Margin = new Thickness(562, 495, 0, 0);
-            //saveRimsBtn.VerticalAlignment = VerticalAlignment.Top;
-            //saveRimsBtn.Height = 22;
-            //saveRimsBtn.Width = 59;
-            //saveRimsBtn.Name = "Saverims";
             SaveRims.Visibility = Visibility.Visible;
             SaveRims.Click += new RoutedEventHandler(SaveRimsBtnClick);
-            //mainGrid.Children.Add(saveRimsBtn);
         }
         void SaveRimsBtnClick(object sender, RoutedEventArgs e)
         {
             SaveRims.IsEnabled = false;
-            //zdezaktywowac ten button ktory wywolal funkcje
             var selectedRims = RimsComboBox.Text;
             if (!string.IsNullOrEmpty(selectedRims))
             {
@@ -173,6 +197,7 @@ namespace LabWzorce1
                 if(selectedRims != "Standard")
                     glasses.Price -= 100;
             }
+            RefreshCurrentOrderList();
         }
         void FillOptionList()
         {
@@ -181,6 +206,11 @@ namespace LabWzorce1
             TheList.Add(new BoolStringClass { TheText = "Polarized"});
             TheList.Add(new BoolStringClass { TheText = "For computer filter"});
             this.DataContext = this;
+            //foreach(CheckBox x in OptionList.Items)
+            //{
+            //    x.IsChecked = false;
+            //}
+                
         }
         void CheckBoxZone_Checked(object sender, RoutedEventArgs e)
         {
@@ -188,24 +218,6 @@ namespace LabWzorce1
             string checkedContent = chkZone.Content.ToString();
             switch (checkedContent)
             {
-                //case "Gucci rims":
-                //    var gucciRims = new Rims(RimTypesEnum.Gucci);
-                //    glasses.Rims = gucciRims.Name;
-                //    glasses.RimsPrice = gucciRims.Price;
-                //    glasses.Price += gucciRims.Price;
-                //    break;
-                //case "Armani rims":
-                //    var armaniRims = new Rims(RimTypesEnum.Armani);
-                //    glasses.Rims = armaniRims.Name;
-                //    glasses.RimsPrice = armaniRims.Price;
-                //    glasses.Price += armaniRims.Price;
-                //    break;
-                //case "Dior rims":
-                //    var diorRims = new Rims(RimTypesEnum.Dior);
-                //    glasses.Rims = diorRims.Name;
-                //    glasses.RimsPrice = diorRims.Price;
-                //    glasses.Price += diorRims.Price;
-                //    break;
                 case "UV filter":
                     var uvFilter = new Filters(FiltersEnum.UV);
                     glassAdditions.AddElement(uvFilter);
@@ -219,32 +231,103 @@ namespace LabWzorce1
                     glassAdditions.AddElement(compFilter);
                     break;
             }
+            //chkZone.IsEnabled = false;
+            RefreshCurrentOrderList();
         }
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-            //save order btn
+        void CheckBoxZone_Unchecked(object sender, RoutedEventArgs e)
+        {
+            CheckBox chkZone = (CheckBox)sender;
+            string checkedContent = chkZone.Content.ToString();
+            switch (checkedContent)
+            {
+                case "UV filter":
+                    var uvFilter = new Filters(FiltersEnum.UV);
+                    glassAdditions.RemoveElement(uvFilter);
+                    break;
+                case "Polarized":
+                    var polarFilter = new Filters(FiltersEnum.Polarized);
+                    glassAdditions.RemoveElement(polarFilter);
+                    break;
+                case "For computer filter":
+                    var compFilter = new Filters(FiltersEnum.ForComputer);
+                    glassAdditions.RemoveElement(compFilter);
+                    break;
+            }
+            RefreshCurrentOrderList();
+        }
+
+        void ResetCurrentValues()
+        {
+            ClearCurrentComboBoxValues();
+            BtnsReenable();
+            HideCurrentOrderElements();
+            glasses = null;
+            glassAdditions = null;
+            orderList = null;
+            TheList = null;
+        }
+        void ClearBtnClick(object sender, RoutedEventArgs e)
+        {
+            ResetCurrentValues();
+        }
+        void SaveOrderBtn(object sender, RoutedEventArgs e)
         {
             glassAdditions.AddToGlasses(glasses);
-            MessageBox.Show(glasses.AdditionList.Count + "");
             foreach (IComposite el in glasses.AdditionList)
             {
-                MessageBox.Show(el.Name + " " + el.Price);
                 glasses.Price += el.Price;
             }
-            //glasses.Price += glasses.RimsPrice;
-            //glasses.Price += glasses.LensesPrice;
-            MessageBox.Show(glasses.Lenses);
-            MessageBox.Show(glasses.LensesPrice.ToString()+"lenses price");
-            MessageBox.Show(glasses.Rims.ToString());
-            MessageBox.Show(glasses.RimsPrice.ToString()+"Rims price");
-            MessageBox.Show(glasses.Price.ToString() +"total price");
+            string path = @"Test.txt";
+            if (!File.Exists(path))
+            {
+                // Create a file to write to.
+                using (StreamWriter sw = File.CreateText(path))
+                {
+                    sw.WriteLine("Orders:");
+                    sw.WriteLine("-------------");
+                }
+            }
+            using (StreamWriter sw = File.AppendText(path))
+            {
+                sw.WriteLine("type:" + glasses._type);
+                sw.WriteLine("lenses type:" + glasses.Lenses);
+                sw.WriteLine("lenses price:" + glasses.LensesPrice);
+                sw.WriteLine("Rims:" + glasses.Rims);
+                sw.WriteLine("Rims price:" + glasses.RimsPrice);
+                foreach (IComposite el in glasses.AdditionList)
+                {
+                    sw.WriteLine(el.Name + " " + el.Price);
+                }
+                sw.WriteLine($"Total price: {glasses.Price}"); 
+                sw.WriteLine("-------------");
 
+            }
+            ResetCurrentValues();
+        }
+        void RefreshCurrentOrderList()
+        {
+            CurrentOrderList.Items.Clear();
+            var glassesType = new TextBlock();
+            glassesType.Text = $"Glasses type: {glasses._type}";
+            var lensesType = new TextBlock();
+            lensesType.Text = $"Lenses type: {glasses.Lenses}, {glasses.LensesPrice}";
+            var rimsType = new TextBlock();
+            rimsType.Text = $"Rims type: {glasses.Rims}, {glasses.RimsPrice}";
 
-            //private void CheckBoxZone_Checked(object sender, RoutedEventArgs e)
-            //{
-            //    CheckBox chkZone = (CheckBox)sender;
-            //    ZoneText.Text = "Selected Zone Name= " + chkZone.Content.ToString();
-            //    ZoneValue.Text = "Selected Zone Value= " + chkZone.Tag.ToString();
-            //}
+            CurrentOrderList.Items.Add(glassesType);
+            CurrentOrderList.Items.Add(lensesType);
+            CurrentOrderList.Items.Add(rimsType);
+            double tempPrice = 0;
+            foreach (IComposite el in glassAdditions.AddedProducts)
+            {
+                var temp = new TextBlock();
+                temp.Text = $"{el.Name}, {el.Price}";
+                tempPrice += el.Price;
+                CurrentOrderList.Items.Add(temp);
+            }
+            var totalPrice = new TextBlock();
+            totalPrice.Text = $"Total price: {glasses.Price + tempPrice}";
+            CurrentOrderList.Items.Add(totalPrice);
 
         }
 
@@ -279,8 +362,8 @@ namespace LabWzorce1
             {
                 BtnSaveDefect.IsEnabled = false;
                 var defect = new DefectValue(defectL, defectR);
-                MessageBox.Show(defect.Name +" " +defect.Price);
                 glassAdditions.AddElement(defect);
+                RefreshCurrentOrderList();
             }
         }
 

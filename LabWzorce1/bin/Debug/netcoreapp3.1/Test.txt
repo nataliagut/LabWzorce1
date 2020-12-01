@@ -1,0 +1,18 @@
+type:Multifocal
+lenses type:Multifocal
+lenses price:200
+Rims:Gucci rims
+Rims price:550
+UV filter 400
+Left defect: 4, Right defect: 4 400
+Total price: 1550
+-------------
+type:Progressive
+lenses type:Progressive
+lenses price:150
+Rims:Dior rims
+Rims price:600
+ForComputer filter 300
+Left defect: 1, Right defect: 1 200
+Total price: 1750
+-------------

@@ -12,7 +12,7 @@ namespace ClassLibrary1
         public double Price { get; }
         public DefectValue(double left, double right)
         {
-            Name = $"Left defect: {left}, right defect: {right}";
+            Name = $"Left defect: {left}, Right defect: {right}";
             //Left = left;
             //Right = right;
             if (left <= -10)
