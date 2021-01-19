@@ -23,7 +23,7 @@ namespace ClassLibrary1
         }
         public void Display()
         {
-            Console.WriteLine("typ:" + _type);
+            Console.WriteLine("type:" + _type);
             Console.WriteLine("lenses:" + Lenses);
             Console.WriteLine("lenses price:" + LensesPrice);
             Console.WriteLine("Rims:" + Rims);

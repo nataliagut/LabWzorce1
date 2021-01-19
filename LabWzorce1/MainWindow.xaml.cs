@@ -26,23 +26,27 @@ namespace LabWzorce1
     public partial class MainWindow : Window
     {
         public ObservableCollection<BoolStringClass> TheList { get; set; }
-        public List<GlassesBuilder> orderList;
+        public List<GlassProductBuilder> orderList;
         public GlassProduct glassAdditions;
         public Glasses glasses;
+        public ContactLenses contactLenses;
         public MainWindow()
         {
             InitializeComponent();
-            orderList = new List<GlassesBuilder>();
+            orderList = new List<GlassProductBuilder>();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void CreateGlassProduct(object sender, RoutedEventArgs e)
         {
             TypeComboBox.Visibility = Visibility.Visible;
             labelChooseType.Visibility = Visibility.Visible;
-            CreateGlasses();
+            Button srcButton = e.Source as Button;
+            string eventBtnName = srcButton.Name;
+            RenderTypes(eventBtnName);
             GlassesProductBtn.IsEnabled = false;
+            ContactLensesBtn.IsEnabled = false;
         }
-        private void CreateGlasses()
+        private void RenderTypes(string eventBtnName)
         {
             var multi = new ComboBoxItem();
             multi.Content = "Multifocal";
@@ -55,17 +59,23 @@ namespace LabWzorce1
             TypeComboBox.Items.Add(multi);
             TypeComboBox.Items.Add(anti);
             TypeComboBox.Items.Add(prog);
-
-            OkButton.Visibility = Visibility.Visible;
+            if (eventBtnName == "GlassesProductBtn")
+                OkButtonGlasses.Visibility = Visibility.Visible;
+            else
+                OkButtonLenses.Visibility = Visibility.Visible;
         }
         void ShowHiddenGlassesElements()
         {
             RimsComboBox.Visibility = Visibility.Visible;
             labelChooseRims.Visibility = Visibility.Visible;
+            ShowCommonElements();
+        }
+        void ShowCommonElements()
+        {
             textBoxLeft.Visibility = Visibility.Visible;
             textBoxRight.Visibility = Visibility.Visible;
             labelSetDefect.Visibility = Visibility.Visible;
-            labelRight.Visibility = Visibility.Visible; 
+            labelRight.Visibility = Visibility.Visible;
             labelLeft.Visibility = Visibility.Visible;
             BtnSaveDefect.Visibility = Visibility.Visible;
             OptionList.Visibility = Visibility.Visible;
@@ -79,7 +89,8 @@ namespace LabWzorce1
             labelChooseType.Visibility = Visibility.Hidden;
             TypeComboBox.Visibility = Visibility.Hidden;
             SaveRims.Visibility = Visibility.Hidden;
-            OkButton.Visibility = Visibility.Hidden;
+            OkButtonGlasses.Visibility = Visibility.Hidden;
+            OkButtonLenses.Visibility = Visibility.Hidden;
             RimsComboBox.Visibility = Visibility.Hidden;
             labelChooseRims.Visibility = Visibility.Hidden;
             textBoxLeft.Visibility = Visibility.Hidden;
@@ -102,7 +113,8 @@ namespace LabWzorce1
         void BtnsReenable()
         {
             GlassesProductBtn.IsEnabled = true;
-            OkButton.IsEnabled = true;
+            OkButtonGlasses.IsEnabled = true;
+            OkButtonLenses.IsEnabled = true;
             TypeComboBox.IsEnabled = true;
             SaveRims.IsEnabled = true;
             RimsComboBox.IsEnabled = true;
@@ -113,30 +125,65 @@ namespace LabWzorce1
             textBoxLeft.Text = "";
 
         }
-        void OkButtonClick(object sender, RoutedEventArgs e)
+        void OkButtonLensesClick(object sender, RoutedEventArgs e)
         {
-            FillOptionList();
             var selectedType = TypeComboBox.Text;
             if (!string.IsNullOrEmpty(selectedType))
             {
-                OkButton.IsEnabled = false;
+                FillOptionList();
+                OkButtonLenses.IsEnabled = false;
                 TypeComboBox.IsEnabled = false;
-                ShowHiddenGlassesElements();
+                ShowCommonElements();
+                string product = "lenses";
                 VisionExpress visionExpress = new VisionExpress();
                 switch (selectedType)
                 {
                     case "Multifocal":
-                        GlassesBuilder builderMulti = new MultifocalBuilder();
+                        GlassProductBuilder builderMulti = new MultifocalBuilder(product);
                         visionExpress.ConstructGlasses(builderMulti);
                         glasses = builderMulti.Glasses;
                         break;
                     case "Progressive":
-                        GlassesBuilder builderProg = new ProgressiveBuilder();
+                        GlassProductBuilder builderProg = new ProgressiveBuilder(product);
                         visionExpress.ConstructGlasses(builderProg);
                         glasses = builderProg.Glasses;
                         break;
                     case "Antireflective":
-                        GlassesBuilder builderAnti = new AntireflectiveBuilder();
+                        GlassProductBuilder builderAnti = new AntireflectiveBuilder(product);
+                        visionExpress.ConstructGlasses(builderAnti);
+                        glasses = builderAnti.Glasses;
+                        break;
+
+                }
+                glassAdditions = new GlassProduct();
+                RefreshCurrentOrderList();
+            }
+        }
+        void OkButtonGlassesClick(object sender, RoutedEventArgs e)
+        {
+            var selectedType = TypeComboBox.Text;
+            if (!string.IsNullOrEmpty(selectedType))
+            {
+                FillOptionList();
+                OkButtonGlasses.IsEnabled = false;
+                TypeComboBox.IsEnabled = false;
+                ShowHiddenGlassesElements();
+                string product = "glasses";
+                VisionExpress visionExpress = new VisionExpress();
+                switch (selectedType)
+                {
+                    case "Multifocal":
+                        GlassProductBuilder builderMulti = new MultifocalBuilder(product);
+                        visionExpress.ConstructGlasses(builderMulti);
+                        glasses = builderMulti.Glasses;
+                        break;
+                    case "Progressive":
+                        GlassProductBuilder builderProg = new ProgressiveBuilder(product);
+                        visionExpress.ConstructGlasses(builderProg);
+                        glasses = builderProg.Glasses;
+                        break;
+                    case "Antireflective":
+                        GlassProductBuilder builderAnti = new AntireflectiveBuilder(product);
                         visionExpress.ConstructGlasses(builderAnti);
                         glasses = builderAnti.Glasses;
                         break;
@@ -194,7 +241,7 @@ namespace LabWzorce1
                         glasses.Price += diorRims.Price;
                         break;
                 }
-                if(selectedRims != "Standard")
+                if (selectedRims != "Standard")
                     glasses.Price -= 100;
             }
             RefreshCurrentOrderList();
@@ -202,15 +249,15 @@ namespace LabWzorce1
         void FillOptionList()
         {
             TheList = new ObservableCollection<BoolStringClass>();
-            TheList.Add(new BoolStringClass { TheText = "UV filter"});
-            TheList.Add(new BoolStringClass { TheText = "Polarized"});
-            TheList.Add(new BoolStringClass { TheText = "For computer filter"});
+            TheList.Add(new BoolStringClass { TheText = "UV filter" });
+            TheList.Add(new BoolStringClass { TheText = "Polarized" });
+            TheList.Add(new BoolStringClass { TheText = "For computer filter" });
             this.DataContext = this;
             //foreach(CheckBox x in OptionList.Items)
             //{
             //    x.IsChecked = false;
             //}
-                
+
         }
         void CheckBoxZone_Checked(object sender, RoutedEventArgs e)
         {
@@ -231,7 +278,6 @@ namespace LabWzorce1
                     glassAdditions.AddElement(compFilter);
                     break;
             }
-            //chkZone.IsEnabled = false;
             RefreshCurrentOrderList();
         }
         void CheckBoxZone_Unchecked(object sender, RoutedEventArgs e)
@@ -280,7 +326,6 @@ namespace LabWzorce1
             string path = @"Test.txt";
             if (!File.Exists(path))
             {
-                // Create a file to write to.
                 using (StreamWriter sw = File.CreateText(path))
                 {
                     sw.WriteLine("Orders:");
@@ -298,13 +343,13 @@ namespace LabWzorce1
                 {
                     sw.WriteLine(el.Name + ", price:" + el.Price);
                 }
-                sw.WriteLine($"Total price: {glasses.Price}"); 
+                sw.WriteLine($"Total price: {glasses.Price}");
                 sw.WriteLine("-------------");
 
             }
             ResetCurrentValues();
         }
-        void RefreshCurrentOrderList()
+        public void RefreshCurrentOrderList()
         {
             CurrentOrderList.Items.Clear();
             var glassesType = new TextBlock();
@@ -366,6 +411,7 @@ namespace LabWzorce1
                 RefreshCurrentOrderList();
             }
         }
+
 
     }
     public class BoolStringClass

@@ -22,6 +22,7 @@ namespace ClassLibrary1
         {
             string name = element.Name;
             AddedProducts.RemoveAll(el => el.Name == name);
+
         }
         public void ShowList()
         {
@@ -38,5 +39,6 @@ namespace ClassLibrary1
                 glasses.AdditionList.Add(el);
             }
         }
+
     }
 }

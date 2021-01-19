@@ -4,12 +4,22 @@ using System.Text;
 
 namespace ClassLibrary1
 {
-    public class AntireflectiveBuilder : GlassesBuilder
+    public class AntireflectiveBuilder : GlassProductBuilder
     {
-        public AntireflectiveBuilder()
+        public AntireflectiveBuilder(string product)
         {
-            Glasses = new Glasses("Antireflective");
+            if (product == "glasses")
+                Glasses = new Glasses("Antireflective");
+            else
+                _ContactLenses = new ContactLenses("Antireflective");
         }
+
+        public override void BuildContactLenses()
+        {
+            _ContactLenses.Price += 60;
+            _ContactLenses.cLColor = ContactLensesColorsEnum.Standard;
+        }
+
         public override void BuildLenses()
         {
             Glasses.Lenses = "Antireflective";
