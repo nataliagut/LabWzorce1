@@ -30,10 +30,21 @@ namespace LabWzorce1
         public GlassProduct glassAdditions;
         public Glasses glasses;
         public ContactLenses contactLenses;
+        public GlassProductDefectCommand glassAddDefectCommand;
         public MainWindow()
         {
             InitializeComponent();
             orderList = new List<GlassProductBuilder>();
+        }
+        private void BtnChangeDefect_Click(object sender, RoutedEventArgs e)
+        {
+            glassAddDefectCommand.Undo();
+            RefreshCurrentOrderList();
+            textBoxLeft.IsEnabled = true;
+            textBoxRight.IsEnabled = true;
+            BtnSaveDefect.IsEnabled = true;
+            BtnUndoDefect.Visibility = Visibility.Hidden;
+            BtnSaveDefect.Visibility = Visibility.Visible;
         }
 
         private void CreateGlassProduct(object sender, RoutedEventArgs e)
@@ -94,6 +105,7 @@ namespace LabWzorce1
         }
         void HideCurrentOrderElements()
         {
+            BtnUndoDefect.Visibility = Visibility.Hidden;
             labelChooseType.Visibility = Visibility.Hidden;
             TypeComboBox.Visibility = Visibility.Hidden;
             OkButtonGlasses.Visibility = Visibility.Hidden;
@@ -171,6 +183,7 @@ namespace LabWzorce1
 
                 }
                 glassAdditions = new GlassProduct();
+                glassAddDefectCommand = new GlassProductDefectCommand();
                 FillColorsOptions();
                 RefreshCurrentOrderList();
             }
@@ -206,6 +219,7 @@ namespace LabWzorce1
 
                 }
                 glassAdditions = new GlassProduct();
+                glassAddDefectCommand = new GlassProductDefectCommand();
                 FillRimsOptions();
                 RefreshCurrentOrderList();
             }
@@ -335,11 +349,6 @@ namespace LabWzorce1
             TheList.Add(new BoolStringClass { TheText = "Polarized" });
             TheList.Add(new BoolStringClass { TheText = "For computer filter" });
             this.DataContext = this;
-            //foreach(CheckBox x in OptionList.Items)
-            //{
-            //    x.IsChecked = false;
-            //}
-
         }
         void CheckBoxZone_Checked(object sender, RoutedEventArgs e)
         {
@@ -393,8 +402,10 @@ namespace LabWzorce1
             glasses = null;
             glassAdditions = null;
             orderList = null;
-            TheList = null;
+            OptionList.UnselectAll();
+            glassAddDefectCommand = null;
         }
+
         void ClearBtnClick(object sender, RoutedEventArgs e)
         {
             ResetCurrentValues();
@@ -540,9 +551,11 @@ namespace LabWzorce1
             }
             if (flag1 && flag2)
             {
-                BtnSaveDefect.IsEnabled = false;
+                BtnUndoDefect.Visibility = Visibility.Visible;
+                BtnSaveDefect.Visibility = Visibility.Hidden;
                 var defect = new DefectValue(defectL, defectR);
-                glassAdditions.AddElement(defect);
+                glassAddDefectCommand.DefectCmd(glassAdditions,WhatToDoEnum.AddElement, defect);
+                glassAddDefectCommand.Call();
                 RefreshCurrentOrderList();
             }
         }

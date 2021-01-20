@@ -14,7 +14,7 @@
         <ListBox x:Name="OptionList" Margin="762,299,192,403" ItemsSource="{Binding TheList}" Visibility="Hidden">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <CheckBox Name="CheckBoxZone" Content="{Binding TheText}" Checked="CheckBoxZone_Checked" Unchecked="CheckBoxZone_Unchecked"/>
+                    <CheckBox Name="CheckBoxZone" Content="{Binding TheText}" Checked="CheckBoxZone_Checked" Unchecked="CheckBoxZone_Unchecked" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
@@ -39,6 +39,6 @@
         <Label x:Name="CurrentOrderLabel" Content="Your current order:" HorizontalAlignment="Left" Margin="807,436,0,0" VerticalAlignment="Top" Background="{x:Null}" FontSize="20" FontWeight="Bold" Visibility="Hidden"/>
         <ListBox x:Name="CurrentOrderList" Margin="763,479,192,29" Visibility="Hidden"/>
         <Button x:Name="ClearOrderBtn" Content="Clear current order" HorizontalAlignment="Left" Margin="385,605,0,0" VerticalAlignment="Top" Height="60" Width="295" FontSize="30" Click="ClearBtnClick" Visibility="Hidden"/>
-
+        <Button x:Name="BtnUndoDefect" Content="Change defect" HorizontalAlignment="Left" Margin="529,392,0,0" VerticalAlignment="Top" Height="32" Width="120" Click="BtnChangeDefect_Click" Visibility="Hidden"/>
     </Grid>
 </Window>
