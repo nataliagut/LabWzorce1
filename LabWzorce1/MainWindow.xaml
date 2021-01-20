@@ -8,15 +8,13 @@
         Title="MainWindow" Height="822" Width="1234">
     <Grid x:Name="mainGrid" Background="#FF4CA4AD">
         <Label Content="Vision Express" HorizontalAlignment="Center" Margin="0,51,0,0" VerticalAlignment="Top" FontSize="80" FontWeight="Bold" FontStyle="Italic" FontFamily="Bahnschrift SemiBold Condensed"/>
-        <Button x:Name="GlassesProductBtn" Content="Glasses" HorizontalAlignment="Left" Margin="114,234,0,0" VerticalAlignment="Top" Height="108" Width="255" FontSize="60" Click="Button_Click"/>
+        <Button x:Name="GlassesProductBtn" Content="Glasses" HorizontalAlignment="Left" Margin="114,234,0,0" VerticalAlignment="Top" Height="108" Width="255" FontSize="60" Click="CreateGlassProduct"/>
+        <Button x:Name="ContactLensesBtn" Content="Contact Lenses" HorizontalAlignment="Left" Margin="114,383,0,0" VerticalAlignment="Top" Height="108" Width="255" FontSize="37" Click="CreateGlassProduct"/>
         <Button x:Name="saveOrderBtn" Content="Save Order" HorizontalAlignment="Left" Margin="114,605,0,0" VerticalAlignment="Top" Height="60" Width="255" FontSize="40" Click="SaveOrderBtn" Visibility="Hidden"/>
-
-
-
         <ListBox x:Name="OptionList" Margin="762,299,192,403" ItemsSource="{Binding TheList}" Visibility="Hidden">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <CheckBox Name="CheckBoxZone" Content="{Binding TheText}" Checked="CheckBoxZone_Checked" Unchecked="CheckBoxZone_Unchecked"/>
+                    <CheckBox Name="CheckBoxZone" Content="{Binding TheText}" Checked="CheckBoxZone_Checked" Unchecked="CheckBoxZone_Unchecked" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
@@ -24,7 +22,9 @@
         <Label x:Name="labelChooseType" Content="2. Choose type:" HorizontalAlignment="Left" Margin="512,194,0,0" VerticalAlignment="Top" Background="{x:Null}" FontSize="20" FontWeight="Bold" Visibility="Hidden"/>
         <Label x:Name="labelChooseProduct" Content="1. Choose product:" HorizontalAlignment="Left" Margin="104,179,0,0" VerticalAlignment="Top" FontSize="30" FontWeight="Bold" />
         <ComboBox x:Name="RimsComboBox" HorizontalAlignment="Left" Margin="529,468,0,0" VerticalAlignment="Top" Width="120" Visibility="Hidden"/>
+        <ComboBox x:Name="ColorsComboBox" HorizontalAlignment="Left" Margin="529,468,0,0" VerticalAlignment="Top" Width="120" Visibility="Hidden"/>
         <Label x:Name="labelChooseRims" Content="4. Choose rims:" HorizontalAlignment="Left" Margin="512,426,0,0" VerticalAlignment="Top" Background="{x:Null}" FontSize="20" FontWeight="Bold" Visibility="Hidden"/>
+        <Label x:Name="labelChooseCLColor" Content="4. Choose color:" HorizontalAlignment="Left" Margin="512,426,0,0" VerticalAlignment="Top" Background="{x:Null}" FontSize="20" FontWeight="Bold" Visibility="Hidden"/>
         <TextBox x:Name="textBoxLeft" HorizontalAlignment="Left" Margin="529,357,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="43" Visibility="Hidden"/>
         <TextBox x:Name="textBoxRight" HorizontalAlignment="Left" Margin="605,357,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="44" Visibility="Hidden"/>
         <Label x:Name="labelSetDefect" Content="3. Set defect value" HorizontalAlignment="Left" Margin="498,270,0,0" VerticalAlignment="Top" Background="{x:Null}" FontSize="20" FontWeight="Bold" Visibility="Hidden"/>
@@ -32,11 +32,13 @@
         <Label x:Name="labelLeft" Content="Left:" HorizontalAlignment="Left" Margin="524,315,0,0" VerticalAlignment="Top" Background="{x:Null}" FontSize="20" FontWeight="Bold" Visibility="Hidden"/>
         <Button x:Name="BtnSaveDefect" Content="Save defect" HorizontalAlignment="Left" Margin="529,392,0,0" VerticalAlignment="Top" Height="32" Width="120" Click="BtnSaveDefect_Click" Visibility="Hidden"/>
         <Button x:Name="SaveRims" Content="OK" HorizontalAlignment="Left" Margin="562,495,0,0" VerticalAlignment="Top" Height="22" Width="59" Visibility="Hidden"/>
-        <Button x:Name="OkButton" Content="OK" HorizontalAlignment="Left" Margin="672,236,0,0" VerticalAlignment="Top" Visibility="Hidden" Height="22" Width="44" Click="OkButtonClick"/>
+        <Button x:Name="SaveColor" Content="OK" HorizontalAlignment="Left" Margin="562,495,0,0" VerticalAlignment="Top" Height="22" Width="59" Visibility="Hidden"/>
+        <Button x:Name="OkButtonGlasses" Content="OK" HorizontalAlignment="Left" Margin="672,236,0,0" VerticalAlignment="Top" Visibility="Hidden" Height="22" Width="44" Click="OkButtonGlassesClick"/>
+        <Button x:Name="OkButtonLenses" Content="OK" HorizontalAlignment="Left" Margin="672,236,0,0" VerticalAlignment="Top" Visibility="Hidden" Height="22" Width="44" Click="OkButtonLensesClick"/>
         <Label x:Name="AdditionsLabel" Content="5. Choose additions" HorizontalAlignment="Left" Margin="805,251,0,0" VerticalAlignment="Top" Background="{x:Null}" FontSize="20" FontWeight="Bold" Visibility="Hidden"/>
         <Label x:Name="CurrentOrderLabel" Content="Your current order:" HorizontalAlignment="Left" Margin="807,436,0,0" VerticalAlignment="Top" Background="{x:Null}" FontSize="20" FontWeight="Bold" Visibility="Hidden"/>
         <ListBox x:Name="CurrentOrderList" Margin="763,479,192,29" Visibility="Hidden"/>
         <Button x:Name="ClearOrderBtn" Content="Clear current order" HorizontalAlignment="Left" Margin="385,605,0,0" VerticalAlignment="Top" Height="60" Width="295" FontSize="30" Click="ClearBtnClick" Visibility="Hidden"/>
-
+        <Button x:Name="BtnUndoDefect" Content="Change defect" HorizontalAlignment="Left" Margin="529,392,0,0" VerticalAlignment="Top" Height="32" Width="120" Click="BtnChangeDefect_Click" Visibility="Hidden"/>
     </Grid>
 </Window>

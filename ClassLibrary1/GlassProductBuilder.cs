@@ -4,12 +4,11 @@ using System.Text;
 
 namespace ClassLibrary1
 {
-    public abstract class GlassesBuilder
+    public abstract class GlassProductBuilder
     {
         public Glasses Glasses { get; set; }
-        //public abstract void getGlassesType();
-        //public abstract void getRims();
+        public ContactLenses _ContactLenses { get; set; }
         public abstract void BuildLenses();
-
+        public abstract void BuildContactLenses();
     }
 }

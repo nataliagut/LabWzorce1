@@ -4,12 +4,22 @@ using System.Text;
 
 namespace ClassLibrary1
 {
-    public class MultifocalBuilder : GlassesBuilder
+    public class MultifocalBuilder : GlassProductBuilder
     {
-        public MultifocalBuilder()
+        public MultifocalBuilder(string product)
         {
-            Glasses = new Glasses("Multifocal");
+            if (product == "glasses")
+                Glasses = new Glasses("Multifocal");
+            else
+                _ContactLenses = new ContactLenses("Multifocal");
         }
+
+        public override void BuildContactLenses()
+        {
+            _ContactLenses.Price += 4;
+            _ContactLenses.cLColor = ContactLensesColorsEnum.Standard;
+        }
+
         public override void BuildLenses()
         {
             Glasses.Lenses = "Multifocal";

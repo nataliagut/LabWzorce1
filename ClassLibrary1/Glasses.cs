@@ -21,20 +21,5 @@ namespace ClassLibrary1
             RimsPrice = 100;
             AdditionList = new List<IComposite>();
         }
-        public void Display()
-        {
-            Console.WriteLine("typ:" + _type);
-            Console.WriteLine("lenses:" + Lenses);
-            Console.WriteLine("lenses price:" + LensesPrice);
-            Console.WriteLine("Rims:" + Rims);
-            Console.WriteLine("Rims price:" + RimsPrice);
-            foreach (IComposite el in AdditionList)
-            {
-                Console.WriteLine(el.Name + " " + el.Price);
-                //Console.WriteLine(el.Price);
-            }
-            Console.WriteLine("Total price:" + (LensesPrice + RimsPrice + Price));
-        }
-
     }
 }

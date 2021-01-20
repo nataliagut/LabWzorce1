@@ -4,12 +4,22 @@ using System.Text;
 
 namespace ClassLibrary1
 {
-    public class ProgressiveBuilder : GlassesBuilder
+    public class ProgressiveBuilder : GlassProductBuilder
     {
-        public ProgressiveBuilder()
+        public ProgressiveBuilder(string product)
         {
-            Glasses = new Glasses("Progressive");
+            if (product == "glasses")
+                Glasses = new Glasses("Progressive");
+            else
+                _ContactLenses = new ContactLenses("Progressive");
         }
+
+        public override void BuildContactLenses()
+        {
+            _ContactLenses.Price += 5;
+            _ContactLenses.cLColor = ContactLensesColorsEnum.Standard;
+        }
+
         public override void BuildLenses()
         {
             Glasses.Lenses = "Progressive";
