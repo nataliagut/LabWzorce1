@@ -13,13 +13,11 @@ namespace ClassLibrary1
             else
                 _ContactLenses = new ContactLenses("Progressive");
         }
-
         public override void BuildContactLenses()
         {
             _ContactLenses.Price += 5;
             _ContactLenses.cLColor = ContactLensesColorsEnum.Standard;
         }
-
         public override void BuildLenses()
         {
             Glasses.Lenses = "Progressive";

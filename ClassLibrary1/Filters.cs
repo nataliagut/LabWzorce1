@@ -10,6 +10,7 @@ namespace ClassLibrary1
         public double Price { get; set; }
         public Filters(FiltersEnum name)
         {
+            //Name = name + " filter";
             Name = name + " filter";
             switch (name)
             {

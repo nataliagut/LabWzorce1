@@ -11,7 +11,6 @@ namespace ClassLibrary1
         public string Rims { get; set; }
         public double RimsPrice { get; set; }
         public double Price { get; set; }
-
         public List<IComposite> AdditionList { get; set; }
         public Glasses(string glassesType)
         {

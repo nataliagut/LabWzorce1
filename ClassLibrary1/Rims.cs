@@ -24,8 +24,6 @@ namespace ClassLibrary1
                     break;
             }
         }
-        public void AddElement(IComposite el)
-        {
-        }
+        public void AddElement(IComposite el) {}
     }
 }
