@@ -39,6 +39,11 @@ namespace ClassLibrary1
                 glasses.AdditionList.Add(el);
             }
         }
+        public void AddToContactLenses(ContactLenses CL)
+        {
+            foreach (IComposite el in AddedProducts)
+                CL.AdditionList.Add(el);
+        }
 
     }
 }

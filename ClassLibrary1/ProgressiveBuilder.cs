@@ -16,7 +16,7 @@ namespace ClassLibrary1
 
         public override void BuildContactLenses()
         {
-            _ContactLenses.Price += 50;
+            _ContactLenses.Price += 5;
             _ContactLenses.cLColor = ContactLensesColorsEnum.Standard;
         }
 

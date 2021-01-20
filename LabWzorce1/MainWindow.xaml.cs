@@ -68,6 +68,14 @@ namespace LabWzorce1
         {
             RimsComboBox.Visibility = Visibility.Visible;
             labelChooseRims.Visibility = Visibility.Visible;
+            SaveRims.Visibility = Visibility.Visible;
+            ShowCommonElements();
+        }
+        void ShowHiddenCLElements()
+        {
+            ColorsComboBox.Visibility = Visibility.Visible;
+            labelChooseCLColor.Visibility = Visibility.Visible;
+            SaveColor.Visibility = Visibility.Visible;
             ShowCommonElements();
         }
         void ShowCommonElements()
@@ -88,11 +96,14 @@ namespace LabWzorce1
         {
             labelChooseType.Visibility = Visibility.Hidden;
             TypeComboBox.Visibility = Visibility.Hidden;
-            SaveRims.Visibility = Visibility.Hidden;
             OkButtonGlasses.Visibility = Visibility.Hidden;
             OkButtonLenses.Visibility = Visibility.Hidden;
             RimsComboBox.Visibility = Visibility.Hidden;
             labelChooseRims.Visibility = Visibility.Hidden;
+            SaveRims.Visibility = Visibility.Hidden;
+            ColorsComboBox.Visibility = Visibility.Hidden;
+            labelChooseCLColor.Visibility = Visibility.Hidden;
+            SaveColor.Visibility = Visibility.Hidden;
             textBoxLeft.Visibility = Visibility.Hidden;
             textBoxRight.Visibility = Visibility.Hidden;
             labelSetDefect.Visibility = Visibility.Hidden;
@@ -107,17 +118,21 @@ namespace LabWzorce1
         }
         void ClearCurrentComboBoxValues()
         {
+            ColorsComboBox.Items.Clear();
             TypeComboBox.Items.Clear();
             RimsComboBox.Items.Clear();
         }
         void BtnsReenable()
         {
+            ContactLensesBtn.IsEnabled = true;
             GlassesProductBtn.IsEnabled = true;
             OkButtonGlasses.IsEnabled = true;
             OkButtonLenses.IsEnabled = true;
             TypeComboBox.IsEnabled = true;
             SaveRims.IsEnabled = true;
             RimsComboBox.IsEnabled = true;
+            SaveColor.IsEnabled = true;
+            ColorsComboBox.IsEnabled = true;
             BtnSaveDefect.IsEnabled = true;
             textBoxRight.IsEnabled = true;
             textBoxRight.Text = "";
@@ -133,29 +148,30 @@ namespace LabWzorce1
                 FillOptionList();
                 OkButtonLenses.IsEnabled = false;
                 TypeComboBox.IsEnabled = false;
-                ShowCommonElements();
+                ShowHiddenCLElements();
                 string product = "lenses";
                 VisionExpress visionExpress = new VisionExpress();
                 switch (selectedType)
                 {
                     case "Multifocal":
                         GlassProductBuilder builderMulti = new MultifocalBuilder(product);
-                        visionExpress.ConstructGlasses(builderMulti);
-                        glasses = builderMulti.Glasses;
+                        visionExpress.ConstructContactLenses(builderMulti);
+                        contactLenses = builderMulti._ContactLenses;
                         break;
                     case "Progressive":
                         GlassProductBuilder builderProg = new ProgressiveBuilder(product);
-                        visionExpress.ConstructGlasses(builderProg);
-                        glasses = builderProg.Glasses;
+                        visionExpress.ConstructContactLenses(builderProg);
+                        contactLenses = builderProg._ContactLenses;
                         break;
                     case "Antireflective":
                         GlassProductBuilder builderAnti = new AntireflectiveBuilder(product);
-                        visionExpress.ConstructGlasses(builderAnti);
-                        glasses = builderAnti.Glasses;
+                        visionExpress.ConstructContactLenses(builderAnti);
+                        contactLenses = builderAnti._ContactLenses;
                         break;
 
                 }
                 glassAdditions = new GlassProduct();
+                FillColorsOptions();
                 RefreshCurrentOrderList();
             }
         }
@@ -210,8 +226,74 @@ namespace LabWzorce1
             RimsComboBox.Items.Add(armaniRims);
             RimsComboBox.Items.Add(diorRims);
 
-            SaveRims.Visibility = Visibility.Visible;
             SaveRims.Click += new RoutedEventHandler(SaveRimsBtnClick);
+        }
+        void FillColorsOptions()
+        {
+            ColorsComboBox.Items.Insert(0, "Standard");
+            ColorsComboBox.SelectedIndex = 0;
+            var gray = new ComboBoxItem();
+            gray.Content = "Gray";
+            var red = new ComboBoxItem();
+            red.Content = "Red";
+            var green = new ComboBoxItem();
+            green.Content = "Green";
+            var blue = new ComboBoxItem();
+            blue.Content = "Blue";
+            var yellow = new ComboBoxItem();
+            yellow.Content = "Yellow";
+            var pink = new ComboBoxItem();
+            pink.Content = "Pink";
+
+            ColorsComboBox.Items.Add(gray);
+            ColorsComboBox.Items.Add(red);
+            ColorsComboBox.Items.Add(green);
+            ColorsComboBox.Items.Add(blue);
+            ColorsComboBox.Items.Add(yellow);
+            ColorsComboBox.Items.Add(pink);
+            SaveColor.Click += new RoutedEventHandler(SaveColorBtnClick);
+
+        }
+        void SaveColorBtnClick(object sender, RoutedEventArgs e)
+        {
+            SaveColor.IsEnabled = false;
+            var selectedColor = ColorsComboBox.Text;
+            if (!string.IsNullOrEmpty(selectedColor))
+            {
+                ColorsComboBox.IsEnabled = false;
+                switch (selectedColor)
+                {
+                    case "Standard":
+                        contactLenses.cLColor = ContactLensesColorsEnum.Standard;
+                        contactLenses.colorPrice = 0;
+                        break;
+                    case "Gray":
+                        contactLenses.cLColor = ContactLensesColorsEnum.Gray;
+                        contactLenses.colorPrice = 30;
+                        break;
+                    case "Red":
+                        contactLenses.cLColor = ContactLensesColorsEnum.Red;
+                        contactLenses.colorPrice = 40;
+                        break;
+                    case "Green":
+                        contactLenses.cLColor = ContactLensesColorsEnum.Green;
+                        contactLenses.colorPrice = 35;
+                        break;
+                    case "Blue":
+                        contactLenses.cLColor = ContactLensesColorsEnum.Blue;
+                        contactLenses.colorPrice = 40;
+                        break;
+                    case "Yellow":
+                        contactLenses.cLColor = ContactLensesColorsEnum.Yellow;
+                        contactLenses.colorPrice = 20;
+                        break;
+                    case "Pink":
+                        contactLenses.cLColor = ContactLensesColorsEnum.Pink;
+                        contactLenses.colorPrice = 30;
+                        break;
+                }
+            }
+            RefreshCurrentOrderList();
         }
         void SaveRimsBtnClick(object sender, RoutedEventArgs e)
         {
@@ -307,6 +389,7 @@ namespace LabWzorce1
             ClearCurrentComboBoxValues();
             BtnsReenable();
             HideCurrentOrderElements();
+            contactLenses = null;
             glasses = null;
             glassAdditions = null;
             orderList = null;
@@ -318,10 +401,22 @@ namespace LabWzorce1
         }
         void SaveOrderBtn(object sender, RoutedEventArgs e)
         {
-            glassAdditions.AddToGlasses(glasses);
-            foreach (IComposite el in glasses.AdditionList)
+            double baseCLPrice = 0;
+            if (contactLenses != null)
+                baseCLPrice = contactLenses.Price;
+            if (glasses != null)
             {
-                glasses.Price += el.Price;
+                glassAdditions.AddToGlasses(glasses);
+                foreach (IComposite el in glasses.AdditionList)
+                {
+                    glasses.Price += el.Price;
+                }
+            }
+            else
+            {
+                glassAdditions.AddToContactLenses(contactLenses);
+                foreach (IComposite el in contactLenses.AdditionList)
+                    contactLenses.Price += el.Price / 100;
             }
             string path = @"Test.txt";
             if (!File.Exists(path))
@@ -334,49 +429,89 @@ namespace LabWzorce1
             }
             using (StreamWriter sw = File.AppendText(path))
             {
-                sw.WriteLine("type:" + glasses._type);
-                sw.WriteLine("lenses type:" + glasses.Lenses);
-                sw.WriteLine("lenses price:" + glasses.LensesPrice);
-                sw.WriteLine("Rims:" + glasses.Rims);
-                sw.WriteLine("Rims price:" + glasses.RimsPrice);
-                foreach (IComposite el in glasses.AdditionList)
+                if (glasses != null)
                 {
-                    sw.WriteLine(el.Name + ", price:" + el.Price);
+                    sw.WriteLine("Glasses");
+                    sw.WriteLine("type: " + glasses._type);
+                    sw.WriteLine("lenses type: " + glasses.Lenses);
+                    sw.WriteLine($"lenses price: {glasses.LensesPrice:c}");
+                    sw.WriteLine("Rims: " + glasses.Rims);
+                    sw.WriteLine($"Rims price: {glasses.RimsPrice:c}");
+                    foreach (IComposite el in glasses.AdditionList)
+                        sw.WriteLine($"{el.Name}, price: {el.Price:c}");
+                    sw.WriteLine($"Total price: {glasses.Price:c}");
+                    sw.WriteLine("-------------");
                 }
-                sw.WriteLine($"Total price: {glasses.Price}");
-                sw.WriteLine("-------------");
+                else
+                {
+                    sw.WriteLine("Contact lenses");
+                    sw.WriteLine("type: " + contactLenses._type);
+                    sw.WriteLine($"base price: {baseCLPrice:c}");
+                    sw.WriteLine("color: " + contactLenses.cLColor);
+                    if (contactLenses.cLColor.ToString() != "Standard")
+                        sw.WriteLine($"color price: {contactLenses.colorPrice:c}");
+                    foreach (IComposite el in contactLenses.AdditionList)
+                        sw.WriteLine($"{el.Name}, price: {(el.Price / 100):c}");
+                    sw.WriteLine($"Total price: {contactLenses.Price + contactLenses.colorPrice:c}");
+                    sw.WriteLine("-------------");
+                }
 
             }
             ResetCurrentValues();
         }
-        public void RefreshCurrentOrderList()
+        void RefreshCurrentOrderList()
         {
             CurrentOrderList.Items.Clear();
-            var glassesType = new TextBlock();
-            glassesType.Text = $"Glasses type: {glasses._type}";
-            var lensesType = new TextBlock();
-            lensesType.Text = $"Lenses type: {glasses.Lenses}, price: {glasses.LensesPrice}";
-            var rimsType = new TextBlock();
-            rimsType.Text = $"Rims type: {glasses.Rims}, price: {glasses.RimsPrice}";
-
-            CurrentOrderList.Items.Add(glassesType);
-            CurrentOrderList.Items.Add(lensesType);
-            CurrentOrderList.Items.Add(rimsType);
+            if (glasses != null)
+            {
+                var glassesType = new TextBlock();
+                glassesType.Text = $"Glasses type: {glasses._type}";
+                var lensesType = new TextBlock();
+                lensesType.Text = $"Lenses type: {glasses.Lenses}, price: {glasses.LensesPrice:c}";
+                var rimsType = new TextBlock();
+                rimsType.Text = $"Rims type: {glasses.Rims}, price: {glasses.RimsPrice:c}";
+                CurrentOrderList.Items.Add(glassesType);
+                CurrentOrderList.Items.Add(lensesType);
+                CurrentOrderList.Items.Add(rimsType);
+            }
+            else
+            {
+                var cLType = new TextBlock();
+                cLType.Text = $"Contact lenses type: {contactLenses._type}";
+                var basePrice = new TextBlock();
+                basePrice.Text = $"Base price: {contactLenses.Price:c}";
+                var clColor = new TextBlock();
+                clColor.Text = $"Color: {contactLenses.cLColor}";
+                var clColorPrice = new TextBlock();
+                CurrentOrderList.Items.Add(cLType);
+                CurrentOrderList.Items.Add(basePrice);
+                CurrentOrderList.Items.Add(clColor);
+                if (contactLenses.cLColor.ToString() != "Standard")
+                {
+                    clColorPrice.Text = $"Color price: {contactLenses.colorPrice:c}";
+                    CurrentOrderList.Items.Add(clColorPrice);
+                }
+            }
             double tempPrice = 0;
             foreach (IComposite el in glassAdditions.AddedProducts)
             {
                 var temp = new TextBlock();
-                temp.Text = $"{el.Name}, price: {el.Price}";
-                tempPrice += el.Price;
+                var price = el.Price;
+                if (glasses == null)
+                    price /= 100;
+                temp.Text = $"{el.Name}, price: {price:c}";
+                tempPrice += price;
                 CurrentOrderList.Items.Add(temp);
             }
             var totalPrice = new TextBlock();
-            totalPrice.Text = $"Total price: {glasses.Price + tempPrice}";
+            if (glasses != null)
+                totalPrice.Text = $"Total price: {(glasses.Price + tempPrice):c}";
+            else
+                totalPrice.Text = $"Total price: {(contactLenses.Price + +contactLenses.colorPrice + tempPrice):c}";
             CurrentOrderList.Items.Add(totalPrice);
 
         }
-
-        private void BtnSaveDefect_Click(object sender, RoutedEventArgs e)
+        void BtnSaveDefect_Click(object sender, RoutedEventArgs e)
         {
             double defectL, defectR;
             bool isDoubleLeft = Double.TryParse(textBoxLeft.Text, out defectL);
@@ -411,8 +546,6 @@ namespace LabWzorce1
                 RefreshCurrentOrderList();
             }
         }
-
-
     }
     public class BoolStringClass
     {
