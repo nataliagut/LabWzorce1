@@ -46,7 +46,6 @@ namespace LabWzorce1
             BtnUndoDefect.Visibility = Visibility.Hidden;
             BtnSaveDefect.Visibility = Visibility.Visible;
         }
-
         private void CreateGlassProduct(object sender, RoutedEventArgs e)
         {
             TypeComboBox.Visibility = Visibility.Visible;
@@ -57,6 +56,63 @@ namespace LabWzorce1
             GlassesProductBtn.IsEnabled = false;
             ContactLensesBtn.IsEnabled = false;
         }
+        private void RenderCheckBox()
+        {
+            List<string> options = new List<string>() { "UV filter", "Polarized", "For computer filter" };
+            foreach(string t in options)
+            {
+                var ch = new CheckBox();
+                ch.Checked += Ch_Checked;
+                ch.Unchecked += Ch_Unchecked;
+                ch.Content = t;
+                optionsST.Children.Add(ch);
+            }
+        }
+
+        private void Ch_Unchecked(object sender, RoutedEventArgs e)
+        {
+            CheckBox chkZone = (CheckBox)sender;
+            string checkedContent = chkZone.Content.ToString();
+            switch (checkedContent)
+            {
+                case "UV filter":
+                    var uvFilter = new Filters(FiltersEnum.UV);
+                    glassAdditions.RemoveElement(uvFilter);
+                    break;
+                case "Polarized":
+                    var polarFilter = new Filters(FiltersEnum.Polarized);
+                    glassAdditions.RemoveElement(polarFilter);
+                    break;
+                case "For computer filter":
+                    var compFilter = new Filters(FiltersEnum.ForComputer);
+                    glassAdditions.RemoveElement(compFilter);
+                    break;
+            }
+            RefreshCurrentOrderList();
+        }
+
+        private void Ch_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckBox chkZone = (CheckBox)sender;
+            string checkedContent = chkZone.Content.ToString();
+            switch (checkedContent)
+            {
+                case "UV filter":
+                    var uvFilter = new Filters(FiltersEnum.UV);
+                    glassAdditions.AddElement(uvFilter);
+                    break;
+                case "Polarized":
+                    var polarFilter = new Filters(FiltersEnum.Polarized);
+                    glassAdditions.AddElement(polarFilter);
+                    break;
+                case "For computer filter":
+                    var compFilter = new Filters(FiltersEnum.ForComputer);
+                    glassAdditions.AddElement(compFilter);
+                    break;
+            }
+            RefreshCurrentOrderList();
+        }
+
         private void RenderTypes(string eventBtnName)
         {
             var multi = new ComboBoxItem();
@@ -91,13 +147,14 @@ namespace LabWzorce1
         }
         void ShowCommonElements()
         {
+            optionsST.Visibility = Visibility.Visible;
             textBoxLeft.Visibility = Visibility.Visible;
             textBoxRight.Visibility = Visibility.Visible;
             labelSetDefect.Visibility = Visibility.Visible;
             labelRight.Visibility = Visibility.Visible;
             labelLeft.Visibility = Visibility.Visible;
             BtnSaveDefect.Visibility = Visibility.Visible;
-            OptionList.Visibility = Visibility.Visible;
+            //OptionList.Visibility = Visibility.Visible;
             CurrentOrderLabel.Visibility = Visibility.Visible;
             CurrentOrderList.Visibility = Visibility.Visible;
             saveOrderBtn.Visibility = Visibility.Visible;
@@ -105,6 +162,7 @@ namespace LabWzorce1
         }
         void HideCurrentOrderElements()
         {
+            optionsST.Visibility = Visibility.Hidden;
             BtnUndoDefect.Visibility = Visibility.Hidden;
             labelChooseType.Visibility = Visibility.Hidden;
             TypeComboBox.Visibility = Visibility.Hidden;
@@ -122,7 +180,7 @@ namespace LabWzorce1
             labelRight.Visibility = Visibility.Hidden;
             labelLeft.Visibility = Visibility.Hidden;
             BtnSaveDefect.Visibility = Visibility.Hidden;
-            OptionList.Visibility = Visibility.Hidden;
+            //OptionList.Visibility = Visibility.Hidden;
             CurrentOrderLabel.Visibility = Visibility.Hidden;
             CurrentOrderList.Visibility = Visibility.Hidden;
             saveOrderBtn.Visibility = Visibility.Hidden;
@@ -184,6 +242,7 @@ namespace LabWzorce1
                 }
                 glassAdditions = new GlassProduct();
                 glassAddDefectCommand = new GlassProductDefectCommand();
+                RenderCheckBox();
                 FillColorsOptions();
                 RefreshCurrentOrderList();
             }
@@ -220,6 +279,7 @@ namespace LabWzorce1
                 }
                 glassAdditions = new GlassProduct();
                 glassAddDefectCommand = new GlassProductDefectCommand();
+                RenderCheckBox();
                 FillRimsOptions();
                 RefreshCurrentOrderList();
             }
@@ -350,48 +410,48 @@ namespace LabWzorce1
             TheList.Add(new BoolStringClass { TheText = "For computer filter" });
             this.DataContext = this;
         }
-        void CheckBoxZone_Checked(object sender, RoutedEventArgs e)
-        {
-            CheckBox chkZone = (CheckBox)sender;
-            string checkedContent = chkZone.Content.ToString();
-            switch (checkedContent)
-            {
-                case "UV filter":
-                    var uvFilter = new Filters(FiltersEnum.UV);
-                    glassAdditions.AddElement(uvFilter);
-                    break;
-                case "Polarized":
-                    var polarFilter = new Filters(FiltersEnum.Polarized);
-                    glassAdditions.AddElement(polarFilter);
-                    break;
-                case "For computer filter":
-                    var compFilter = new Filters(FiltersEnum.ForComputer);
-                    glassAdditions.AddElement(compFilter);
-                    break;
-            }
-            RefreshCurrentOrderList();
-        }
-        void CheckBoxZone_Unchecked(object sender, RoutedEventArgs e)
-        {
-            CheckBox chkZone = (CheckBox)sender;
-            string checkedContent = chkZone.Content.ToString();
-            switch (checkedContent)
-            {
-                case "UV filter":
-                    var uvFilter = new Filters(FiltersEnum.UV);
-                    glassAdditions.RemoveElement(uvFilter);
-                    break;
-                case "Polarized":
-                    var polarFilter = new Filters(FiltersEnum.Polarized);
-                    glassAdditions.RemoveElement(polarFilter);
-                    break;
-                case "For computer filter":
-                    var compFilter = new Filters(FiltersEnum.ForComputer);
-                    glassAdditions.RemoveElement(compFilter);
-                    break;
-            }
-            RefreshCurrentOrderList();
-        }
+        //void CheckBoxZone_Checked(object sender, RoutedEventArgs e)
+        //{
+        //    CheckBox chkZone = (CheckBox)sender;
+        //    string checkedContent = chkZone.Content.ToString();
+        //    switch (checkedContent)
+        //    {
+        //        case "UV filter":
+        //            var uvFilter = new Filters(FiltersEnum.UV);
+        //            glassAdditions.AddElement(uvFilter);
+        //            break;
+        //        case "Polarized":
+        //            var polarFilter = new Filters(FiltersEnum.Polarized);
+        //            glassAdditions.AddElement(polarFilter);
+        //            break;
+        //        case "For computer filter":
+        //            var compFilter = new Filters(FiltersEnum.ForComputer);
+        //            glassAdditions.AddElement(compFilter);
+        //            break;
+        //    }
+        //    RefreshCurrentOrderList();
+        //}
+        //void CheckBoxZone_Unchecked(object sender, RoutedEventArgs e)
+        //{
+        //    CheckBox chkZone = (CheckBox)sender;
+        //    string checkedContent = chkZone.Content.ToString();
+        //    switch (checkedContent)
+        //    {
+        //        case "UV filter":
+        //            var uvFilter = new Filters(FiltersEnum.UV);
+        //            glassAdditions.RemoveElement(uvFilter);
+        //            break;
+        //        case "Polarized":
+        //            var polarFilter = new Filters(FiltersEnum.Polarized);
+        //            glassAdditions.RemoveElement(polarFilter);
+        //            break;
+        //        case "For computer filter":
+        //            var compFilter = new Filters(FiltersEnum.ForComputer);
+        //            glassAdditions.RemoveElement(compFilter);
+        //            break;
+        //    }
+        //    RefreshCurrentOrderList();
+        //}
 
         void ResetCurrentValues()
         {
@@ -402,8 +462,8 @@ namespace LabWzorce1
             glasses = null;
             glassAdditions = null;
             orderList = null;
-            OptionList.UnselectAll();
-            glassAddDefectCommand = null;
+            //OptionList.UnselectAll();
+            optionsST.Children.Clear();
         }
 
         void ClearBtnClick(object sender, RoutedEventArgs e)

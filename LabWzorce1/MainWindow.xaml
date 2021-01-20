@@ -11,13 +11,13 @@
         <Button x:Name="GlassesProductBtn" Content="Glasses" HorizontalAlignment="Left" Margin="114,234,0,0" VerticalAlignment="Top" Height="108" Width="255" FontSize="60" Click="CreateGlassProduct"/>
         <Button x:Name="ContactLensesBtn" Content="Contact Lenses" HorizontalAlignment="Left" Margin="114,383,0,0" VerticalAlignment="Top" Height="108" Width="255" FontSize="37" Click="CreateGlassProduct"/>
         <Button x:Name="saveOrderBtn" Content="Save Order" HorizontalAlignment="Left" Margin="114,605,0,0" VerticalAlignment="Top" Height="60" Width="255" FontSize="40" Click="SaveOrderBtn" Visibility="Hidden"/>
-        <ListBox x:Name="OptionList" Margin="762,299,192,403" ItemsSource="{Binding TheList}" Visibility="Hidden">
+        <!--<ListBox x:Name="OptionList" Margin="762,299,192,403" ItemsSource="{Binding TheList}" Visibility="Visible">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <CheckBox Name="CheckBoxZone" Content="{Binding TheText}" Checked="CheckBoxZone_Checked" Unchecked="CheckBoxZone_Unchecked" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
-        </ListBox>
+        </ListBox>-->
         <ComboBox x:Name="TypeComboBox" HorizontalAlignment="Left" Margin="529,236,0,0" VerticalAlignment="Top" Width="120" Visibility="Hidden"/>
         <Label x:Name="labelChooseType" Content="2. Choose type:" HorizontalAlignment="Left" Margin="512,194,0,0" VerticalAlignment="Top" Background="{x:Null}" FontSize="20" FontWeight="Bold" Visibility="Hidden"/>
         <Label x:Name="labelChooseProduct" Content="1. Choose product:" HorizontalAlignment="Left" Margin="104,179,0,0" VerticalAlignment="Top" FontSize="30" FontWeight="Bold" />
@@ -40,5 +40,6 @@
         <ListBox x:Name="CurrentOrderList" Margin="763,479,192,29" Visibility="Hidden"/>
         <Button x:Name="ClearOrderBtn" Content="Clear current order" HorizontalAlignment="Left" Margin="385,605,0,0" VerticalAlignment="Top" Height="60" Width="295" FontSize="30" Click="ClearBtnClick" Visibility="Hidden"/>
         <Button x:Name="BtnUndoDefect" Content="Change defect" HorizontalAlignment="Left" Margin="529,392,0,0" VerticalAlignment="Top" Height="32" Width="120" Click="BtnChangeDefect_Click" Visibility="Hidden"/>
+        <StackPanel x:Name="optionsST" Width="280" Height="104" Background="White" Margin="762,299,192,403" Visibility="Hidden"/>
     </Grid>
 </Window>

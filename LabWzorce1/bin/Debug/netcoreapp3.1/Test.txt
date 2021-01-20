@@ -1,0 +1,52 @@
+Orders:
+-------------
+Glasses
+type: Multifocal
+lenses type: Multifocal
+lenses price: 200,00 zł
+Rims: standard
+Rims price: 100,00 zł
+ForComputer filter, price: 300,00 zł
+UV filter, price: 400,00 zł
+Total price: 1 000,00 zł
+-------------
+Glasses
+type: Progressive
+lenses type: Progressive
+lenses price: 150,00 zł
+Rims: standard
+Rims price: 100,00 zł
+Polarized filter, price: 200,00 zł
+Total price: 450,00 zł
+-------------
+Contact lenses
+type: Multifocal
+base price: 4,00 zł
+color: Yellow
+color price: 20,00 zł
+UV filter, price: 4,00 zł
+Polarized filter, price: 2,00 zł
+ForComputer filter, price: 3,00 zł
+Total price: 33,00 zł
+-------------
+Contact lenses
+type: Multifocal
+base price: 4,00 zł
+color: Gray
+color price: 30,00 zł
+UV filter, price: 4,00 zł
+Left defect: 15, Right defect: 15, price: 6,00 zł
+ForComputer filter, price: 3,00 zł
+Total price: 47,00 zł
+-------------
+Glasses
+type: Multifocal
+lenses type: Multifocal
+lenses price: 200,00 zł
+Rims: standard
+Rims price: 100,00 zł
+ForComputer filter, price: 300,00 zł
+Polarized filter, price: 200,00 zł
+UV filter, price: 400,00 zł
+Total price: 1 200,00 zł
+-------------
