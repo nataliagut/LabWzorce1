@@ -396,6 +396,7 @@ namespace LabWzorce1
         }
         void HideCurrentOrderElements()
         {
+            ChangeColorBtn.Visibility = Visibility.Hidden;
             optionsST.Visibility = Visibility.Hidden;
             BtnUndoDefect.Visibility = Visibility.Hidden;
             labelChooseType.Visibility = Visibility.Hidden;
@@ -452,6 +453,7 @@ namespace LabWzorce1
             glassAdditions = null;
             orderList = null;
             optionsST.Children.Clear();
+            SaveRims.Click -= SaveRimsBtnClick;
         }
         void RefreshCurrentOrderList()
         {
