@@ -11,7 +11,6 @@ namespace ClassLibrary1
         public double Price { get; set; }
         public GlassProduct()
         {
-            //AddedProducts = glasses.AdditionList;
             AddedProducts = new List<IComposite>();
         }
         public void AddElement(IComposite element)
@@ -22,7 +21,6 @@ namespace ClassLibrary1
         {
             string name = element.Name;
             AddedProducts.RemoveAll(el => el.Name == name);
-
         }
         public void ShowList()
         {
@@ -44,6 +42,5 @@ namespace ClassLibrary1
             foreach (IComposite el in AddedProducts)
                 CL.AdditionList.Add(el);
         }
-
     }
 }

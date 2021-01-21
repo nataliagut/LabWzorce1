@@ -13,19 +13,16 @@ namespace ClassLibrary1
             else
                 _ContactLenses = new ContactLenses("Antireflective");
         }
-
         public override void BuildContactLenses()
         {
             _ContactLenses.Price += 6;
             _ContactLenses.cLColor = ContactLensesColorsEnum.Standard;
         }
-
         public override void BuildLenses()
         {
             Glasses.Lenses = "Antireflective";
             Glasses.LensesPrice = 100;
             Glasses.Price += 100;
         }
-
     }
 }

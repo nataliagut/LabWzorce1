@@ -7,14 +7,10 @@ namespace ClassLibrary1
     public class DefectValue : IComposite
     {
         public string Name { get; }
-        //public double Left;
-        //public double Right;
         public double Price { get; }
         public DefectValue(double left, double right)
         {
             Name = $"Left defect: {left}, Right defect: {right}";
-            //Left = left;
-            //Right = right;
             if (left <= -10)
                 Price += 300;
             else if (left > -10 && left < -3)

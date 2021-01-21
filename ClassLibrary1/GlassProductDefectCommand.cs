@@ -8,9 +8,7 @@ namespace ClassLibrary1
     {
         private GlassProduct _glassProduct;
         WhatToDoEnum _whatToDo;
-
         private IComposite _element;
-
         public void DefectCmd(GlassProduct glassProduct, WhatToDoEnum whattodo, IComposite element)
         {
             _glassProduct = glassProduct;
